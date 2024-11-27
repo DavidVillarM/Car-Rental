@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { initializeLocalStorage } from './utils/localStorage';
+import { initialVehicles, initialUsers, initialClients } from './utils/data';
+
+initializeLocalStorage('vehiculos', initialVehicles);
+initializeLocalStorage('usuarios', initialUsers);
+initializeLocalStorage('clientes', initialClients);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
