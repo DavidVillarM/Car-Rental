@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
+import { loginUser } from './api';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        const users = JSON.parse(localStorage.getItem('usuarios')) || [];
-        const user = users.find(u => u.usuario === username && u.password === password);
-
-        if (user) {
-            alert('Inicio de sesión exitoso');
-            window.location.href = '/';
-        } else {
-            alert('Usuario o contraseña incorrectos');
+    const handleLogin = async () => {
+        try {
+            const response = await loginUser({ usuario: username, password });
+            if (response.data.success) {
+                alert('Inicio de sesión exitoso');
+                window.location.href = '/';
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+        } catch (error) {
+            console.error('Error al iniciar sesión:', error);
+            alert('Ocurrió un error, intente nuevamente');
         }
     };
 
