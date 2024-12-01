@@ -1,43 +1,48 @@
 import React, { useState } from 'react';
-import { loginUser } from './api';
+import { loginUser } from '../utils/api';
+import { useNavigate } from 'react-router-dom';
 
-function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+const Login = () => {
+    const [formData, setFormData] = useState({ username: '', password: '' });
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const response = await loginUser({ usuario: username, password });
-            if (response.data.success) {
-                alert('Inicio de sesión exitoso');
-                window.location.href = '/';
-            } else {
-                alert('Usuario o contraseña incorrectos');
-            }
-        } catch (error) {
-            console.error('Error al iniciar sesión:', error);
-            alert('Ocurrió un error, intente nuevamente');
+            const response = await loginUser(formData);
+            localStorage.setItem('token', response.data.token);
+            navigate('/catalogo');
+        } catch (err) {
+            setError('Credenciales inválidas');
         }
     };
 
     return (
         <div>
-            <h1>Login</h1>
-            <input 
-                type="text" 
-                placeholder="Usuario" 
-                value={username} 
-                onChange={(e) => setUsername(e.target.value)} 
-            />
-            <input 
-                type="password" 
-                placeholder="Contraseña" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-            />
-            <button onClick={handleLogin}>Iniciar Sesión</button>
+            <h2>Iniciar Sesión</h2>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Usuario"
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Contraseña"
+                    onChange={handleInputChange}
+                />
+                <button type="submit">Ingresar</button>
+            </form>
+            {error && <p>{error}</p>}
         </div>
     );
-}
+};
 
 export default Login;

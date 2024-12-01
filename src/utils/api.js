@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5087/api', 
+    baseURL: 'http://localhost:5087/api', // Cambiar si el puerto es diferente
     headers: {
         'Content-Type': 'application/json',
     },
@@ -25,3 +25,5 @@ export const createClient = (data) => api.post('/clientes', data);
 export const registerRental = (data) => api.post('/alquileres', data);
 export const returnRental = (id, data) => api.put(`/alquileres/${id}/devolver`, data);
 export const getRentalReports = (params) => api.get('/alquileres/informes', { params });
+
+

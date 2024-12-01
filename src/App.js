@@ -16,7 +16,7 @@ import { filterByBrand } from './utils/filter';
 
 
 
-const nuevoVehiculo = { id: 3, marca: 'Ford', modelo: 'Focus' };
+/*const nuevoVehiculo = { id: 3, marca: 'Ford', modelo: 'Focus' };
 
 // Initialize vehicles properly
 let vehicles = getFromLocalStorage('vehiculos') || []; // Ensure vehicles is an array
@@ -26,7 +26,7 @@ vehicles = [...vehicles, nuevoVehiculo];
 saveToLocalStorage('vehiculos', vehicles);
 
 const filteredVehicles = filterByBrand(vehicles, 'Toyota');
-
+*/
 
 function App() {
   return (
